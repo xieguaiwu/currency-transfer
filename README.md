@@ -49,13 +49,19 @@ Requirements: JDK 17+, Android SDK 35.
 
 ### Install on a phone
 
-Enable USB debugging on the phone, then:
+Option 1 — from GitHub release (signed APK):
+
+1. Open https://github.com/xieguaiwu/currency-transfer/releases
+2. Download **FX-Pixel-v1.0.0.apk** (signed) and open it
+3. Allow "install unknown apps" for your file manager/browser if prompted
+
+Option 2 — enable USB debugging on the phone, then:
 
 ```bash
-# Option A: one-shot script (pushes to /sdcard/Download/)
+# One-shot script (pushes to /sdcard/Download/)
 ./scripts/push-apk-to-phone.sh
 
-# Option B: adb install directly
+# Or adb install directly
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 

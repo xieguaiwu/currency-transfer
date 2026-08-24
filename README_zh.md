@@ -48,13 +48,19 @@
 
 ### 安装到手机
 
-手机开启 USB 调试后：
+方式 1 — 从 GitHub Release 下载（已签名 APK）：
+
+1. 打开 https://github.com/xieguaiwu/currency-transfer/releases
+2. 下载 **FX-Pixel-v1.0.0.apk**（已签名）并打开
+3. 若有提示，允许文件管理器/浏览器"安装未知应用"
+
+方式 2 — 手机开启 USB 调试后：
 
 ```bash
-# 方式 A：一键脚本（推送到 /sdcard/Download/）
+# 一键脚本（推送到 /sdcard/Download/）
 ./scripts/push-apk-to-phone.sh
 
-# 方式 B：adb 直接安装
+# 或 adb 直接安装
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
