@@ -1,8 +1,8 @@
-# Currency Transfer
+# FX Pixel (Currency Transfer)
 
 [**中文版**](README_zh.md) | [**English**](#)
 
-A privacy-friendly Android app for global currency conversion and inflation calculation.
+A privacy-friendly Android app for global currency conversion and inflation calculation, wrapped in a retro pixel theme.
 
 ## Features
 
@@ -10,7 +10,8 @@ A privacy-friendly Android app for global currency conversion and inflation calc
 - **Inflation**: compare purchasing power between any two years (1990–2026) using World Bank CPI data
 - **Buying power**: see how much a 2015 amount is worth in 2025, with cumulative and average annual inflation
 - **Search**: find any currency by code or name
-- **No ads, no tracking, no accounts**: single INTERNET permission, cleartext traffic disabled
+- **Retro pixel theme**: PICO-8 palette, Press Start 2P pixel font (OFL)
+- **No ads, no tracking, no accounts**: single INTERNET permission, HTTPS only
 
 ## Screens
 
@@ -45,15 +46,33 @@ Requirements: JDK 17+, Android SDK 35.
 
 ```bash
 ./gradlew testDebugUnitTest
-# 42 unit tests: inflation math, currency table, API response parsing
+# Unit tests: inflation math, currency table, API response parsing
+./gradlew lintDebug
+# Android Lint: 0 errors, 0 warnings
 ```
 
-## Privacy
+## Screenshots (Paparazzi)
 
-- Single permission: INTERNET (needed to fetch rates and CPI)
+UI renders are produced by Paparazzi (JVM, no device needed):
+
+```bash
+./gradlew testDebugUnitTest --tests "com.xieguiawu.currencytransfer.AppScreenshotsTest"
+# PNGs: app/build/reports/paparazzi/debug/images/
+```
+
+## Privacy & Security
+
+- Single permission: INTERNET (to fetch rates and CPI)
 - No telemetry, no ads, no analytics
-- No data is stored locally; all requests go directly to the public data sources
-- Cleartext HTTP is disabled; requests use HTTPS
+- Cleartext HTTP blocked via network security config; system CAs only
+- Cloud backup and device transfer disabled (no data persisted)
+- No data is stored locally; requests go directly to public data sources
+
+## F-Droid / Release
+
+- `fastlane/metadata/`: bilingual store metadata (en-US, zh-CN)
+- `scripts/verify-reproducible.sh`: reproducible build check (verified at tag v1.0.0)
+- `docs/fdroid/com.xieguiawu.currencytransfer.yml`: fdroiddata metadata draft (AntiFeatures: NonFreeNet)
 
 ## License
 

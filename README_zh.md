@@ -1,8 +1,8 @@
-# 货币换算与通胀计算
+# FX Pixel（货币换算与通胀计算）
 
 [**English**](README.md) | [**中文版**](#)
 
-注重隐私的安卓应用：全球货币实时汇率 + 任意年份之间的通货膨胀计算。
+注重隐私的安卓应用：全球货币实时汇率 + 任意年份之间的通货膨胀计算，采用复古像素主题。
 
 ## 功能
 
@@ -10,7 +10,8 @@
 - **通胀计算**：使用世界银行 CPI 数据，比较任意两年（1990–2026）之间的购买力
 - **购买力对比**：如 2015 年的 100 美元 ≈ 2025 年的多少钱，含累计通胀率与年均通胀率
 - **货币搜索**：按代码或名称快速查找
-- **无广告、无跟踪、无账号**：仅 INTERNET 权限，禁用明文流量
+- **复古像素主题**：PICO-8 配色、Press Start 2P 像素字体（OFL 许可）
+- **无广告、无跟踪、无账号**：仅 INTERNET 权限，全 HTTPS
 
 ## 界面
 
@@ -44,15 +45,33 @@
 
 ```bash
 ./gradlew testDebugUnitTest
-# 42 个单元测试：通胀计算、货币表、API 响应解析
+# 单元测试：通胀计算、货币表、API 响应解析
+./gradlew lintDebug
+# Android Lint：0 错误，0 警告
 ```
 
-## 隐私
+## 截图（Paparazzi）
+
+UI 渲染由 Paparazzi 生成（JVM，无需真机）：
+
+```bash
+./gradlew testDebugUnitTest --tests "com.xieguiawu.currencytransfer.AppScreenshotsTest"
+# PNG：app/build/reports/paparazzi/debug/images/
+```
+
+## 隐私与安全
 
 - 唯一权限：INTERNET（获取汇率与 CPI 所需）
 - 无遥测、无广告、无统计
+- 通过 network security config 阻止明文 HTTP，仅系统 CA
+- 禁用云备份与设备迁移（不持久化数据）
 - 本地不存储任何数据；请求直接发往公开数据源
-- 禁用明文 HTTP，全部走 HTTPS
+
+## F-Droid / 发布
+
+- `fastlane/metadata/`：双语商店元数据（en-US、zh-CN）
+- `scripts/verify-reproducible.sh`：可复现构建验证（已在 tag v1.0.0 实测通过）
+- `docs/fdroid/com.xieguiawu.currencytransfer.yml`：fdroiddata 元数据草稿（反特性：NonFreeNet）
 
 ## 许可证
 

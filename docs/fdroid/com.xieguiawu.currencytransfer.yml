@@ -1,0 +1,24 @@
+# F-Droid metadata draft for com.xieguiawu.currencytransfer
+# TODO: replace SourceCode/IssueTracker with real public repo URLs before MR.
+Categories:
+  - Money
+License: MIT
+AuthorName: xieguiawu
+SourceCode: https://github.com/xieguiawu/currency-transfer
+IssueTracker: https://github.com/xieguiawu/currency-transfer/issues
+Changelog: https://github.com/xieguiawu/currency-transfer/releases
+AutoName: FX Pixel
+RepoType: git
+Repo: https://github.com/xieguiawu/currency-transfer
+Builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: v1.0.0
+    gradle:
+      - yes
+AntiFeatures:
+  - NonFreeNet
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.0.0
+CurrentVersionCode: 1
