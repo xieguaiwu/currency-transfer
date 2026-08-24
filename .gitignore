@@ -1,0 +1,9 @@
+.gradle/
+build/
+local.properties
+*.apk
+.idea/
+captures/
+.DS_Store
+.kotlin/
+graphify-out/
