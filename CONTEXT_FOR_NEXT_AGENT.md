@@ -21,13 +21,13 @@ v1.0.0 已完成 UI 精修 + 漏洞测试 + F-Droid 发布准备（tag v1.0.0）
   - 反特性：NonFreeNet（依赖公开 API，需声明，不阻止）
   - fastlane 元数据 en-US/zh-CN（short/full/changelog/icon 512/真实 UI 截图 ×2）
   - 可复现构建实测通过：verify-reproducible.sh 双构建 SHA-256 一致（7b872bf5）
-  - fdroiddata 草稿 docs/fdroid/com.xieguiawu.currencytransfer.yml（Category: Money 已验证官方存在）
+  - fdroiddata 草稿 docs/fdroid/com.xieguiawu.currencytransfer.yml（Category: **Market & Price** —— 实测官方 config/categories.yml：无 Money 分类！Market & Price 是汇率应用正确分类；subdir: app 必加）
 - 数据源重构：ExchangeRateSource/CpiSource 接口化（fake 可注入，Paparazzi 测试用）
 
 ## 遗留问题 / 待办
-- [ ] **fdroiddata MR**：需用户 GitLab 账号 fork fdroiddata 提 MR（本地草稿 docs/fdroid/*.yml 已校验通过；scripts/validate-fdroid-metadata.sh 可重复校验）
+- [ ] **fdroiddata MR**：需用户 GitLab 账号；**提交包已就绪** docs/fdroid/SUBMIT_GUIDE.md（step-by-step 指引）+ fdroiddata-mr-0001.patch（可直接 git am）+ 本地验证分支 commit 2a421f44（/tmp 已清理，补丁即可重现）
 - [ ] 截图由 Paparazzi 生成（真实 UI 代码），建议真机侧载替换以更贴近实际（skill §3.2 建议）
-- [ ] 真机冒烟（adb 无设备）；可复现构建在本机验证通过（tag v1.0.0 干净树）
+- [ ] 真机冒烟（adb 无设备）；可复现构建在本机验证通过（tag v1.0.0 干净树，SHA-256 7b872bf5）
 - [ ] 可选：Verified 徽章路线（需自有签名 keystore，首次发布前决策；当前 F-Droid 官方签名）
 - [ ] 可选：汇率/CPI 本地缓存、汇率历史图
 
