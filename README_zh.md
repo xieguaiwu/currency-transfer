@@ -86,6 +86,10 @@ UI 渲染由 Paparazzi 生成（JVM，无需真机）：
 
 见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
+## CI
+
+推送或 PR 到 master 会触发 GitHub Actions：单元测试、Android Lint、release APK 构建。
+
 ## 许可证
 
 MIT — 见 [LICENSE](LICENSE)。

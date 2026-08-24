@@ -87,6 +87,11 @@ See [SECURITY.md](SECURITY.md) for the security policy.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## CI
+
+Push or PR to master triggers GitHub Actions:
+unit tests, Android Lint, and release APK assembly.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

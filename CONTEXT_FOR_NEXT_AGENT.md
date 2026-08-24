@@ -25,11 +25,16 @@ v1.0.0 已完成 UI 精修 + 漏洞测试 + F-Droid 发布准备（tag v1.0.0）
 - 数据源重构：ExchangeRateSource/CpiSource 接口化（fake 可注入，Paparazzi 测试用）
 
 ## 遗留问题 / 待办
-- [ ] **fdroiddata MR**：需用户 GitLab 账号 fork fdroiddata 提 MR（远程仓库 URL 已真实化：xieguaiwu/currency-transfer）
-- [ ] 截图由 Paparazzi 生成（真实 UI 代码），建议真机侧载替换以更贴近实际（skill §3.2 建议）；已随 README 展示 docs/screenshots/
-- [ ] 真机冒烟（adb 无设备）；可复现构建在本机验证，F-Droid buildserver 需在 tag 处干净构建（已满足：tag v1.0.0 干净树）
-- [ ] 可选：GitHub Release 发布 APK（Verified 徽章路线需自有签名，首次发布前决策）
+- [ ] **fdroiddata MR**：需用户 GitLab 账号 fork fdroiddata 提 MR（本地草稿 docs/fdroid/*.yml 已校验通过；scripts/validate-fdroid-metadata.sh 可重复校验）
+- [ ] 截图由 Paparazzi 生成（真实 UI 代码），建议真机侧载替换以更贴近实际（skill §3.2 建议）
+- [ ] 真机冒烟（adb 无设备）；可复现构建在本机验证通过（tag v1.0.0 干净树）
+- [ ] 可选：Verified 徽章路线（需自有签名 keystore，首次发布前决策；当前 F-Droid 官方签名）
 - [ ] 可选：汇率/CPI 本地缓存、汇率历史图
+
+## CI / 发布
+- GitHub Actions .github/workflows/ci.yml：push/PR → 单测 + Lint + assembleRelease + APK artifact（远程实测全绿）
+- GitHub Release v1.0.0 已创建（含 unsigned APK + SHA-256 5fdcb0ba...）
+- 仓库 topics 已设 7 个；Discussions 未启用（API 不可设，需网页）
 
 ## 远程资源
 无（数据来自公开免费 API）
