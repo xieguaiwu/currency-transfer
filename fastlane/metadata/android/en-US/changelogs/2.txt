@@ -1,0 +1,4 @@
+v1.0.1
+- Fixed: currency picker now opens when tapped (was unresponsive)
+- Fixed: currency selection works on both Exchange and Inflation screens
+- Verified: 51/51 tests green, lint clean
