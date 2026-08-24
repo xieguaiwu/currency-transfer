@@ -1,0 +1,45 @@
+From 2a421f44e9f0ba60a168bb707dc708009c9853dc Mon Sep 17 00:00:00 2001
+From: xieguaiwu <xieguaiwu@users.noreply.github.com>
+Date: Mon, 24 Aug 2026 15:21:19 +0800
+Subject: [PATCH] Add FX Pixel (com.xieguiawu.currencytransfer)
+
+Retro-pixel Android app for currency exchange rates and inflation calculation.
+MIT, keyless public APIs, AntiFeatures: NonFreeNet.
+---
+ metadata/com.xieguiawu.currencytransfer.yml | 24 +++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 metadata/com.xieguiawu.currencytransfer.yml
+
+diff --git a/metadata/com.xieguiawu.currencytransfer.yml b/metadata/com.xieguiawu.currencytransfer.yml
+new file mode 100644
+index 000000000..b7e378776
+--- /dev/null
++++ b/metadata/com.xieguiawu.currencytransfer.yml
+@@ -0,0 +1,24 @@
++# F-Droid metadata draft for com.xieguiawu.currencytransfer
++Categories:
++  - Market & Price
++License: MIT
++AuthorName: xieguaiwu
++SourceCode: https://github.com/xieguaiwu/currency-transfer
++IssueTracker: https://github.com/xieguaiwu/currency-transfer/issues
++Changelog: https://github.com/xieguaiwu/currency-transfer/releases
++AutoName: FX Pixel
++RepoType: git
++Repo: https://github.com/xieguaiwu/currency-transfer
++Builds:
++  - versionName: 1.0.0
++    versionCode: 1
++    commit: v1.0.0
++    subdir: app
++    gradle:
++      - yes
++AntiFeatures:
++  - NonFreeNet
++AutoUpdateMode: Version
++UpdateCheckMode: Tags
++CurrentVersion: 1.0.0
++CurrentVersionCode: 1
+-- 
+2.54.0
+
