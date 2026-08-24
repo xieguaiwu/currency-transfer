@@ -19,6 +19,11 @@ private data class WbDatum(
     val value: Double? = null,
 )
 
+/** Data source for annual consumer price index data. */
+interface CpiSource {
+    suspend fun fetchCpi(iso3: String): List<CpiPoint>
+}
+
 /**
  * Client for the World Bank Indicators API.
  * URL: https://api.worldbank.org/v2/country/{iso3}/indicator/{code}?format=json&per_page=200&date=1990:2026
@@ -32,9 +37,9 @@ private data class WbDatum(
  * FP.CPI.TOTL.ZG (annual inflation rate, %) and rebuild an index
  * from the rate chain. Both series are free and keyless.
  */
-class WorldBankApi(private val json: Json = ApiClient.json) {
+class WorldBankApi(private val json: Json = ApiClient.json) : CpiSource {
 
-    suspend fun fetchCpi(iso3: String): List<CpiPoint> = withContext(Dispatchers.IO) {
+    override suspend fun fetchCpi(iso3: String): List<CpiPoint> = withContext(Dispatchers.IO) {
         val index = fetchIndicator(iso3, "FP.CPI.TOTL")
         if (index.isNotEmpty()) return@withContext index
         val rates = fetchIndicator(iso3, "FP.CPI.TOTL.ZG")

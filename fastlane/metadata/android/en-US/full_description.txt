@@ -1,0 +1,33 @@
+FX Pixel is a privacy-friendly app for global currency
+conversion and historical inflation comparison.
+
+Exchange tab
+- Live rates for 160+ currencies (open.er-api.com)
+- Convert any amount between two currencies
+- See both directions of the rate
+- Refresh on demand
+
+Inflation tab
+- Compare purchasing power between two years
+- World Bank CPI data (consumer price index)
+- Cumulative inflation and average annual rate
+- Buying-power equivalent (e.g. 100 USD in 2015)
+- 1990 to current year
+
+Search
+- Find any currency by code or name
+
+Privacy
+- No ads, no tracking, no analytics
+- No account required
+- Only INTERNET permission
+- All traffic is HTTPS
+- No data stored locally
+
+Data sources
+- open.er-api.com (free, no key)
+- World Bank Indicators API (free, no key)
+
+Note: the app depends on public network services for
+live data. If those services are unavailable, the app
+shows an error and offers retry.

@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xieguiawu.currencytransfer.data.ExchangeRateApi
+import com.xieguiawu.currencytransfer.data.ExchangeRateSource
 import com.xieguiawu.currencytransfer.data.ExchangeRates
 import java.io.IOException
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ data class ExchangeUiState(
 )
 
 class ExchangeViewModel(
-    private val api: ExchangeRateApi = ExchangeRateApi(),
+    private val source: ExchangeRateSource = ExchangeRateApi(),
 ) : ViewModel() {
 
     var state by mutableStateOf(ExchangeUiState())
@@ -32,7 +33,7 @@ class ExchangeViewModel(
         state = state.copy(loading = true, error = null)
         viewModelScope.launch {
             try {
-                val rates = api.fetchRates()
+                val rates = source.fetchRates()
                 state = ExchangeUiState(loading = false, rates = rates)
             } catch (e: IOException) {
                 state = ExchangeUiState(loading = false, error = friendlyMessage(e))

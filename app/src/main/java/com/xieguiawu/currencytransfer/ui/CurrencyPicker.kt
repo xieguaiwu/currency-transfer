@@ -107,7 +107,7 @@ fun CurrencyPicker(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { dialogOpen = false }) { Text("Close") }
+                TextButton(onClick = { dialogOpen = false }, shape = MaterialTheme.shapes.small) { Text("Close") }
             },
         )
     }

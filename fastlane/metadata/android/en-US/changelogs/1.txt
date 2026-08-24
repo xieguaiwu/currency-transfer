@@ -1,0 +1,5 @@
+Initial release.
+- Live exchange rates for 160+ currencies
+- Inflation calculator between two years (1990-2026)
+- Retro pixel theme
+- Privacy-friendly: no ads, no tracking, no account

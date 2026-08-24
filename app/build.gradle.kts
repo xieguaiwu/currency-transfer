@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("app.cash.paparazzi") version "1.3.5"
 }
 
 android {
@@ -41,4 +42,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+}
+
+// Paparazzi layoutlib needs this (avoid JDK 21 module access issues)
+tasks.withType<Test>().configureEach {
+    jvmArgs("-Dfile.encoding=UTF-8")
 }

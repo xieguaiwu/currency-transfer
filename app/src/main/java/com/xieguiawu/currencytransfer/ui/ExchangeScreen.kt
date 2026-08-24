@@ -1,5 +1,6 @@
 package com.xieguiawu.currencytransfer.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -102,6 +103,7 @@ fun ExchangeScreen(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
             ),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)),
         ) {
             Column(Modifier.padding(16.dp)) {
                 Text(
@@ -122,17 +124,11 @@ fun ExchangeScreen(
                     )
                     converted != null -> {
                         Text(
-                            "${formatAmount(amount)} $from",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        )
-                        Text("=", style = MaterialTheme.typography.titleMedium)
-                        Text(
-                            "${formatAmount(converted)} $to",
+                            "${formatAmount(amount)} $from = ${formatAmount(converted)} $to",
                             style = MaterialTheme.typography.headlineSmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
-                        Spacer(Modifier.height(8.dp))
+                        Spacer(Modifier.height(12.dp))
                         Text(
                             "1 $from = ${formatRate(rateTo / rateFrom)} $to",
                             style = MaterialTheme.typography.bodyMedium,
@@ -150,7 +146,7 @@ fun ExchangeScreen(
 
         // Footer: refresh + timestamp
         Row(Modifier.fillMaxWidth(), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-            Button(onClick = { viewModel.load() }) {
+            Button(onClick = { viewModel.load() }, shape = MaterialTheme.shapes.small) {
                 Icon(Icons.Filled.Refresh, contentDescription = null, Modifier.size(18.dp))
                 Spacer(Modifier.size(6.dp))
                 Text("Refresh")
@@ -158,13 +154,21 @@ fun ExchangeScreen(
             Spacer(Modifier.weight(1f))
             state.rates?.let { rates ->
                 Text(
-                    "Updated: ${rates.updatedUtc}",
+                    "Updated: ${formatUpdatedUtc(rates.updatedUtc)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
     }
+}
+
+/** "Mon, 24 Aug 2026 00:02:31 +0000" -> "Aug 24, 2026 08:02" (local time, compact). */
+private fun formatUpdatedUtc(raw: String): String = try {
+    val dt = java.time.ZonedDateTime.parse(raw, java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME)
+    dt.format(java.time.format.DateTimeFormatter.ofPattern("MMM d, yyyy HH:mm"))
+} catch (e: Exception) {
+    raw.replace(" +0000", "")
 }
 
 private fun formatAmount(value: Double): String =

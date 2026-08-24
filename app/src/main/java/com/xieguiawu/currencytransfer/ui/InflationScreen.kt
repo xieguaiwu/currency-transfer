@@ -1,5 +1,6 @@
 package com.xieguiawu.currencytransfer.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -141,7 +142,10 @@ fun InflationScreen(
             state.error != null -> Column {
                 Text(state.error, color = MaterialTheme.colorScheme.error)
                 Spacer(Modifier.height(8.dp))
-                Button(onClick = { iso3.let { viewModel.load(it) } }) {
+                Button(
+                    onClick = { iso3.let { viewModel.load(it) } },
+                    shape = MaterialTheme.shapes.small,
+                ) {
                     Icon(Icons.Filled.Refresh, contentDescription = null, Modifier.size(18.dp))
                     Spacer(Modifier.size(6.dp))
                     Text("Retry")
@@ -193,6 +197,7 @@ private fun InflationResultCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)),
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(
@@ -212,13 +217,14 @@ private fun InflationResultCard(
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(8.dp))
                 Text(
                     "Average per year: ${"%.2f".format(annual)}%",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
                 amount?.let {
+                    Spacer(Modifier.height(8.dp))
                     Text(
                         "${formatAmount(it)} $currency in $fromYear \u2248 ${formatAmount(power)} $currency in $toYear",
                         style = MaterialTheme.typography.bodyLarge,
@@ -230,7 +236,7 @@ private fun InflationResultCard(
             actualFrom?.let { from -> actualTo?.let { to ->
                 if (from.year != fromYear || to.year != toYear) {
                     Text(
-                        "Note: based on available data for $from.year and $to.year.",
+                        "Note: based on available data for ${from.year} and ${to.year}.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )

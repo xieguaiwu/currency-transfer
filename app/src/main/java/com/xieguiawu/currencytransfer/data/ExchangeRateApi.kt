@@ -18,6 +18,11 @@ data class ExchangeRates(
     fun rateOf(code: String): Double? = rates[code]
 }
 
+/** Data source for live exchange rates. */
+interface ExchangeRateSource {
+    suspend fun fetchRates(base: String = "USD"): ExchangeRates
+}
+
 @Serializable
 private data class ExchangeRatesResponse(
     val result: String,
@@ -30,9 +35,9 @@ private data class ExchangeRatesResponse(
  * Client for open.er-api.com — free, keyless, ~160 currencies.
  * Documented at https://www.exchangerate-api.com/docs/free
  */
-class ExchangeRateApi(private val json: Json = ApiClient.json) {
+class ExchangeRateApi(private val json: Json = ApiClient.json) : ExchangeRateSource {
 
-    suspend fun fetchRates(base: String = "USD"): ExchangeRates = withContext(Dispatchers.IO) {
+    override suspend fun fetchRates(base: String): ExchangeRates = withContext(Dispatchers.IO) {
         val request = Request.Builder()
             .url("https://open.er-api.com/v6/latest/$base")
             .build()
