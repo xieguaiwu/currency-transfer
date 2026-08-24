@@ -58,6 +58,18 @@ class CurrenciesTest {
     }
 
     @Test
+    fun iso3For_countriesWithoutWorldBankCpi_areNull() {
+        // Verified live 2026-08-25: World Bank publishes neither FP.CPI.TOTL nor
+        // FP.CPI.TOTL.ZG for these ISO3 codes. Null keeps them out of the
+        // inflation picker instead of showing a permanent "no data" dead state.
+        assertNull(Currencies.iso3For("TWD")) // Taiwan
+        assertNull(Currencies.iso3For("CUP")) // Cuba
+        assertNull(Currencies.iso3For("SOS")) // Somalia
+        assertNull(Currencies.iso3For("TMT")) // Turkmenistan
+        assertNull(Currencies.iso3For("ERN")) // Eritrea
+    }
+
+    @Test
     fun displayName_knownCurrency() {
         val name = Currencies.displayName("USD")
         assertTrue("unexpected name: $name", name.contains("US") || name.contains("Dollar"))

@@ -2,8 +2,14 @@
 
 ## 项目当前状态
 FX Pixel（currency-transfer）— Android 应用（Kotlin/Compose），全球货币实时汇率 + 年份间通胀计算，复古像素风。
-v1.0.0 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远程/CI/Release。
-**远程仓库**：https://github.com/xieguaiwu/currency-transfer（PUBLIC，默认 master，tag v1.0.0）
+v1.0.1 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远程/CI/Release。
+**远程仓库**：https://github.com/xieguaiwu/currency-transfer（PUBLIC，默认 master，tag v1.0.1）
+
+## 最后一次完成的工作（2026-08-25：CPI 数据基础核查 + 可靠性修复）
+- **全量实弹核查**：139 个 ISO3 映射全部实测 World Bank API（模拟真实请求参数），零映射错误；发现 5 个永久无数据货币（TWD/CUP/SOS/TMT/ERN）与 ~15 个短/旧序列国家（VEN/ZWE/SDN/YEM 等），API 首轮超时率 14%
+- **修复 1（死货币）**：TWD/CUP/SOS/TMT/ERN → countryIso3=null，从通胀页选择器移除（Currencies.kt + CurrenciesTest 新增验证测试）
+- **修复 2（缓存）**：新增 DiskCpiCache（7 天 TTL、原子写、损坏自愈）+ CpiCache 接口；WorldBankApi 注入 cache + client 参数；缓存命中零网络、网络错误回退最近缓存（离线可用）；InflationScreen 用 viewModelFactory 接缓存（applicationContext.cacheDir/cpi-cache）
+- **测试**：DiskCpiCacheTest 9 项（roundtrip/TTL/隔离/损坏/跨实例）+ WorldBankApiTest 新增 5 项 MockWebServer 测试（缓存命中、缓存写入、离线回退、无缓存报错、EMU 回退链入缓存）；新增 mockwebserver 4.12.0 测试依赖
 
 ## 最后一次完成的工作（2026-08-24 第四轮：货币切换修复）
 - **致命交互 bug 修复**：货币选择字段点击无反应（readOnly OutlinedTextField 消费 pointer 事件 → 外层 clickable 永不触发）。修复：Box 包裹 + matchParentSize 透明 overlay 捕获点击（CurrencyPicker.kt）
@@ -23,7 +29,7 @@ v1.0.0 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远�
 - [ ] **fdroiddata MR**：需用户 GitLab 账号（无 glab/token/Chrome 会话）；提交包已就绪 docs/fdroid/SUBMIT_GUIDE.md，fork 后 2 分钟可提 MR
 - [ ] 截图由 Paparazzi 生成（真实 UI 代码），建议真机侧载替换（skill §3.2）
 - [ ] 可选：Verified 徽章路线（需自有签名 keystore，首次发布前决策；当前 F-Droid 官方签名）
-- [ ] 可选：汇率/CPI 本地缓存、汇率历史图
+- [ ] 可选：汇率本地缓存、汇率历史图
 
 ## CI / 发布
 - GitHub Actions .github/workflows/ci.yml：push/PR → 单测 + Lint + assembleRelease + APK artifact（远程实测全绿）
@@ -42,7 +48,7 @@ v1.0.0 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远�
 ```
 MainActivity → MainScreen(Tab+header) → ExchangeScreen / InflationScreen
   └─ ExchangeViewModel / InflationViewModel（接口注入，可测试）
-  └─ data/  Currencies(货币表+ISO3) · ExchangeRateApi(ExchangeRateSource) · WorldBankApi(CpiSource) · InflationCalculator(纯函数)
+  └─ data/  Currencies(货币表+ISO3) · ExchangeRateApi(ExchangeRateSource) · WorldBankApi(CpiSource，7 天磁盘缓存+离线回退) · CpiCache/DiskCpiCache · InflationCalculator(纯函数)
 ```
 - 安全：res/xml/network_security_config.xml（HTTPS only）、backup_rules.xml、data_extraction_rules.xml
 - 像素风：ui/theme/Theme.kt（PICO-8 palette + PressStart2P + 方形 shapes）；字体 res/font/press_start_2p.ttf（OFL）

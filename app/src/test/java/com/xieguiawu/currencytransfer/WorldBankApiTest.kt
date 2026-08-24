@@ -1,9 +1,21 @@
 package com.xieguiawu.currencytransfer
 
+import com.xieguiawu.currencytransfer.data.CpiCache
+import com.xieguiawu.currencytransfer.data.CpiPoint
 import com.xieguiawu.currencytransfer.data.WorldBankApi
 import java.io.File
+import java.io.IOException
+import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
 /**
@@ -89,5 +101,108 @@ class WorldBankApiTest {
         val cum = com.xieguiawu.currencytransfer.data.InflationCalculator
             .cumulativeInflation(index, 1990, 1992)
         assertEquals(2.9, cum!!, 1e-9) // 113.19/110 - 1
+    }
+
+    // --- cache + network behaviour (MockWebServer) ---
+
+    private lateinit var server: MockWebServer
+
+    @Before
+    fun setUpServer() {
+        server = MockWebServer()
+        server.start()
+    }
+
+    @After
+    fun tearDownServer() {
+        server.shutdown()
+    }
+
+    private fun api(cache: CpiCache?): WorldBankApi {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .build()
+        val baseUrl = server.url("/").toString().removeSuffix("/")
+        return WorldBankApi(client = client, cache = cache, baseUrl = baseUrl)
+    }
+
+    private fun enqueueUsaIndex() {
+        server.enqueue(
+            MockResponse().setResponseCode(200).setBody(File("src/test/resources/wb_cpi_usa.json").readText()),
+        )
+    }
+
+    /** In-memory cache whose fresh/any state can be controlled per test. */
+    private class MemoryCpiCache : CpiCache {
+        private var stored: List<CpiPoint>? = null
+        override fun getFresh(iso3: String): List<CpiPoint>? = stored
+        override fun getAny(iso3: String): List<CpiPoint>? = stored
+        override fun put(iso3: String, points: List<CpiPoint>) { stored = points }
+    }
+
+    /** Cache that only serves stale data (fresh = miss, any = hit). */
+    private class StaleOnlyCpiCache(private val stored: List<CpiPoint>) : CpiCache {
+        override fun getFresh(iso3: String): List<CpiPoint>? = null
+        override fun getAny(iso3: String): List<CpiPoint>? = stored
+        override fun put(iso3: String, points: List<CpiPoint>) {}
+    }
+
+    @Test
+    fun fetchCpi_cacheHit_skipsNetwork() {
+        val cached = listOf(CpiPoint(2024, 143.8))
+        val cache = MemoryCpiCache().apply { put("USA", cached) }
+        val result = runBlocking { api(cache).fetchCpi("USA") }
+        assertEquals(cached, result)
+        assertEquals(0, server.requestCount)
+    }
+
+    @Test
+    fun fetchCpi_cacheMiss_fetchesAndStores() {
+        enqueueUsaIndex()
+        val cache = MemoryCpiCache()
+        val api = api(cache)
+        val result = runBlocking { api.fetchCpi("USA") }
+        assertTrue(result.isNotEmpty())
+        assertNotNull(cache.getFresh("USA"))
+        assertEquals(1, server.requestCount)
+        // Second call is served from cache - no second network request.
+        runBlocking { api.fetchCpi("USA") }
+        assertEquals(1, server.requestCount)
+    }
+
+    @Test
+    fun fetchCpi_networkError_servesStaleCache() {
+        server.enqueue(MockResponse().setResponseCode(500).setBody("boom"))
+        val stale = listOf(CpiPoint(2024, 143.8))
+        val result = runBlocking { api(StaleOnlyCpiCache(stale)).fetchCpi("USA") }
+        assertEquals(stale, result)
+    }
+
+    @Test
+    fun fetchCpi_networkError_withoutCache_throws() {
+        server.enqueue(MockResponse().setResponseCode(500).setBody("boom"))
+        val ex = assertThrows(IOException::class.java) {
+            runBlocking { api(null).fetchCpi("USA") }
+        }
+        assertTrue(ex.message?.contains("HTTP 500") == true)
+    }
+
+    @Test
+    fun fetchCpi_emuFallback_rebuiltAndCached() {
+        // First request: index series is all-null for EMU -> fallback to rates.
+        server.enqueue(
+            MockResponse().setResponseCode(200).setBody(
+                """[{"page":1,"pages":1,"per_page":200,"total":36,"sourceid":"2","lastupdated":"2026-07-13"},[{"indicator":{"id":"FP.CPI.TOTL","value":"Consumer price index (2010 = 100)"},"country":{"id":"XC","value":"Euro area"},"countryiso3code":"EMU","date":"2025","value":null,"unit":"","obs_status":"","decimal":1}]]""",
+            ),
+        )
+        server.enqueue(
+            MockResponse().setResponseCode(200).setBody(File("src/test/resources/wb_cpi_emu_rates.json").readText()),
+        )
+        val cache = MemoryCpiCache()
+        val result = runBlocking { api(cache).fetchCpi("EMU") }
+        assertEquals(36, result.size)
+        assertEquals(2, server.requestCount)
+        assertEquals(36, cache.getFresh("EMU")?.size)
     }
 }

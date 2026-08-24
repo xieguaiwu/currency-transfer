@@ -4,8 +4,9 @@ package com.xieguiawu.currencytransfer.data
  * Currency metadata for the exchange-rate and inflation screens.
  *
  * [countryIso3] is the World Bank ISO3 country code used for the CPI series.
- * It is null when the currency has no single national CPI series
- * (for example XOF, XCD, or cryptocurrencies).
+ * It is null when the currency has no usable World Bank CPI series
+ * (multi-country currencies like XOF/XCD, cryptocurrencies, or countries with
+ * no published data at all: TWD/CUP/SOS/TMT/ERN - verified live 2026-08-25).
  */
 data class CurrencyInfo(
     val code: String,
@@ -50,7 +51,7 @@ object Currencies {
         CurrencyInfo("CNY", "Chinese Yuan", "CHN"),
         CurrencyInfo("COP", "Colombian Peso", "COL"),
         CurrencyInfo("CRC", "Costa Rican Colón", "CRI"),
-        CurrencyInfo("CUP", "Cuban Peso", "CUB"),
+        CurrencyInfo("CUP", "Cuban Peso", null),
         CurrencyInfo("CVE", "Cape Verdean Escudo", "CPV"),
         CurrencyInfo("CZK", "Czech Koruna", "CZE"),
         CurrencyInfo("DJF", "Djiboutian Franc", "DJI"),
@@ -58,7 +59,7 @@ object Currencies {
         CurrencyInfo("DOP", "Dominican Peso", "DOM"),
         CurrencyInfo("DZD", "Algerian Dinar", "DZA"),
         CurrencyInfo("EGP", "Egyptian Pound", "EGY"),
-        CurrencyInfo("ERN", "Eritrean Nakfa", "ERI"),
+        CurrencyInfo("ERN", "Eritrean Nakfa", null),
         CurrencyInfo("ETB", "Ethiopian Birr", "ETH"),
         CurrencyInfo("EUR", "Euro", "EMU"),
         CurrencyInfo("FJD", "Fijian Dollar", "FJI"),
@@ -137,7 +138,7 @@ object Currencies {
         CurrencyInfo("SEK", "Swedish Krona", "SWE"),
         CurrencyInfo("SGD", "Singapore Dollar", "SGP"),
         CurrencyInfo("SLL", "Sierra Leonean Leone", "SLE"),
-        CurrencyInfo("SOS", "Somali Shilling", "SOM"),
+        CurrencyInfo("SOS", "Somali Shilling", null),
         CurrencyInfo("SRD", "Surinamese Dollar", "SUR"),
         CurrencyInfo("SSP", "South Sudanese Pound", "SSD"),
         CurrencyInfo("STN", "São Tomé and Príncipe Dobra", "STP"),
@@ -145,12 +146,12 @@ object Currencies {
         CurrencyInfo("SZL", "Swazi Lilangeni", "SWZ"),
         CurrencyInfo("THB", "Thai Baht", "THA"),
         CurrencyInfo("TJS", "Tajikistani Somoni", "TJK"),
-        CurrencyInfo("TMT", "Turkmenistani Manat", "TKM"),
+        CurrencyInfo("TMT", "Turkmenistani Manat", null),
         CurrencyInfo("TND", "Tunisian Dinar", "TUN"),
         CurrencyInfo("TOP", "Tongan Paʻanga", "TON"),
         CurrencyInfo("TRY", "Turkish Lira", "TUR"),
         CurrencyInfo("TTD", "Trinidad and Tobago Dollar", "TTO"),
-        CurrencyInfo("TWD", "New Taiwan Dollar", "TWN"),
+        CurrencyInfo("TWD", "New Taiwan Dollar", null),
         CurrencyInfo("TZS", "Tanzanian Shilling", "TZA"),
         CurrencyInfo("UAH", "Ukrainian Hryvnia", "UKR"),
         CurrencyInfo("UGX", "Ugandan Shilling", "UGA"),

@@ -11,6 +11,7 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.OkHttpClient
 import okhttp3.Request
 
 @Serializable
@@ -37,21 +38,37 @@ interface CpiSource {
  * FP.CPI.TOTL.ZG (annual inflation rate, %) and rebuild an index
  * from the rate chain. Both series are free and keyless.
  */
-class WorldBankApi(private val json: Json = ApiClient.json) : CpiSource {
+class WorldBankApi(
+    private val json: Json = ApiClient.json,
+    private val client: OkHttpClient = ApiClient.client,
+    private val cache: CpiCache? = null,
+    private val baseUrl: String = WORLD_BANK_BASE_URL,
+) : CpiSource {
 
     override suspend fun fetchCpi(iso3: String): List<CpiPoint> = withContext(Dispatchers.IO) {
+        cache?.getFresh(iso3)?.let { return@withContext it }
+        try {
+            fetchRemote(iso3).also { cache?.put(iso3, it) }
+        } catch (e: IOException) {
+            // Offline fallback: annual CPI does not meaningfully go stale.
+            cache?.getAny(iso3)?.let { return@withContext it }
+            throw e
+        }
+    }
+
+    private suspend fun fetchRemote(iso3: String): List<CpiPoint> {
         val index = fetchIndicator(iso3, "FP.CPI.TOTL")
-        if (index.isNotEmpty()) return@withContext index
+        if (index.isNotEmpty()) return index
         val rates = fetchIndicator(iso3, "FP.CPI.TOTL.ZG")
-        if (rates.isEmpty()) return@withContext emptyList()
-        rebuildIndex(rates)
+        if (rates.isEmpty()) return emptyList()
+        return rebuildIndex(rates)
     }
 
     private suspend fun fetchIndicator(iso3: String, indicator: String): List<CpiPoint> {
         val request = Request.Builder()
-            .url("https://api.worldbank.org/v2/country/$iso3/indicator/$indicator?format=json&per_page=200&date=1990:2026")
+            .url("$baseUrl/v2/country/$iso3/indicator/$indicator?format=json&per_page=200&date=1990:2026")
             .build()
-        val body = ApiClient.client.newCall(request).execute().use { response ->
+        val body = client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
                 throw IOException("World Bank API returned HTTP ${response.code}")
             }
@@ -91,5 +108,9 @@ class WorldBankApi(private val json: Json = ApiClient.json) : CpiSource {
             index *= factor
             CpiPoint(p.year, index)
         }
+    }
+
+    companion object {
+        const val WORLD_BANK_BASE_URL = "https://api.worldbank.org"
     }
 }

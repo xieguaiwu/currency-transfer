@@ -37,6 +37,10 @@ Notes:
   The app falls back to the annual inflation-rate series and rebuilds the index.
   Ratios (cumulative inflation, purchasing power) remain exact.
 - The latest calendar year is often unpublished; the app uses the most recent available data point.
+- CPI series are cached locally for 7 days; when the network is unavailable,
+  the last cached series is used instead of showing an error.
+- Currencies without a usable World Bank CPI series (TWD, CUP, SOS, TMT, ERN, XOF, ...)
+  are excluded from the inflation tab.
 
 ## Install
 

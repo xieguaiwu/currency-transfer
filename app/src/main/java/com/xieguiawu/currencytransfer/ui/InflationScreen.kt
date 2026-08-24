@@ -30,14 +30,39 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.xieguiawu.currencytransfer.data.CpiPoint
 import com.xieguiawu.currencytransfer.data.Currencies
+import com.xieguiawu.currencytransfer.data.DiskCpiCache
 import com.xieguiawu.currencytransfer.data.InflationCalculator
+import com.xieguiawu.currencytransfer.data.WorldBankApi
+import java.io.File
 
 private const val MIN_YEAR = 1990
 private const val MAX_YEAR = 2026
+
+/**
+ * Default view model: World Bank CPI with a 7-day on-disk cache.
+ * The cache survives restarts and serves the last known series offline.
+ */
+@Composable
+private fun defaultInflationViewModel(): InflationViewModel {
+    val appContext = LocalContext.current.applicationContext
+    return viewModel(factory = viewModelFactory {
+        initializer {
+            InflationViewModel(
+                source = WorldBankApi(
+                    cache = DiskCpiCache(File(appContext.cacheDir, "cpi-cache")),
+                ),
+            )
+        }
+    })
+}
 
 /**
  * Tab 2: inflation between two years for a chosen currency.
@@ -46,7 +71,7 @@ private const val MAX_YEAR = 2026
 @Composable
 fun InflationScreen(
     modifier: Modifier = Modifier,
-    viewModel: InflationViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: InflationViewModel = defaultInflationViewModel(),
 ) {
     val state = viewModel.state
     var currency by rememberSaveable { mutableStateOf("USD") }

@@ -1,9 +1,12 @@
 package com.xieguiawu.currencytransfer.data
 
+import kotlinx.serialization.Serializable
+
 /**
  * A single annual CPI observation from the World Bank.
  * [value] is the consumer price index (2010 = 100).
  */
+@Serializable
 data class CpiPoint(
     val year: Int,
     val value: Double,
