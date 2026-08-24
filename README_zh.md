@@ -2,7 +2,19 @@
 
 [**English**](README.md) | [**中文版**](#)
 
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blueviolet)
+![Android](https://img.shields.io/badge/minSdk-26-orange)
+![Target](https://img.shields.io/badge/targetSdk-35-blue)
+![Lint](https://img.shields.io/badge/Lint-0%20errors-brightgreen)
+
 注重隐私的安卓应用：全球货币实时汇率 + 任意年份之间的通货膨胀计算，采用复古像素主题。
+
+## 界面截图
+
+| 汇率换算 | 通胀计算 |
+|---|---|
+| ![Exchange](docs/screenshots/exchange.png) | ![Inflation](docs/screenshots/inflation.png) |
 
 ## 功能
 
@@ -12,13 +24,6 @@
 - **货币搜索**：按代码或名称快速查找
 - **复古像素主题**：PICO-8 配色、Press Start 2P 像素字体（OFL 许可）
 - **无广告、无跟踪、无账号**：仅 INTERNET 权限，全 HTTPS
-
-## 界面
-
-| Tab | 功能 |
-|---|---|
-| Exchange（汇率） | 输入金额、选择两种货币，查看实时换算结果与双向汇率 |
-| Inflation（通胀） | 选择货币、输入两个年份，查看累计通胀率、年均通胀率与购买力等价金额 |
 
 ## 数据源
 
@@ -40,6 +45,8 @@
 ./gradlew assembleDebug
 # APK 路径: app/build/outputs/apk/debug/app-debug.apk
 ```
+
+F-Droid 发布准备中（见下方 F-Droid 章节）。
 
 ## 测试
 
@@ -67,11 +74,17 @@ UI 渲染由 Paparazzi 生成（JVM，无需真机）：
 - 禁用云备份与设备迁移（不持久化数据）
 - 本地不存储任何数据；请求直接发往公开数据源
 
+安全政策见 [SECURITY.md](SECURITY.md)。
+
 ## F-Droid / 发布
 
 - `fastlane/metadata/`：双语商店元数据（en-US、zh-CN）
 - `scripts/verify-reproducible.sh`：可复现构建验证（已在 tag v1.0.0 实测通过）
 - `docs/fdroid/com.xieguiawu.currencytransfer.yml`：fdroiddata 元数据草稿（反特性：NonFreeNet）
+
+## 贡献
+
+见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 许可证
 
