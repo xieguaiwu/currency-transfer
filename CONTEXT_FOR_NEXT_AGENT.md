@@ -5,6 +5,11 @@ FX Pixel（currency-transfer）— Android 应用（Kotlin/Compose），全球�
 v1.0.0 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远程/CI/Release。
 **远程仓库**：https://github.com/xieguaiwu/currency-transfer（PUBLIC，默认 master，tag v1.0.0）
 
+## 最后一次完成的工作（2026-08-24 第四轮：货币切换修复）
+- **致命交互 bug 修复**：货币选择字段点击无反应（readOnly OutlinedTextField 消费 pointer 事件 → 外层 clickable 永不触发）。修复：Box 包裹 + matchParentSize 透明 overlay 捕获点击（CurrencyPicker.kt）
+- **新增 CurrencyPickerInteractionTest**：performTouchInput { click() } 物理注入测试（语义 performClick 假阳性测不出此 bug）；修复前 2/3 失败 → 修复后 3/3 通过；全套 51/51 绿 + lint 干净
+- 经验已沉淀：~/prompt_boilerplates/Coding/android-development.md（安卓开发 skill，§2 入口测试 / §3 触摸交互铁律）
+
 ## 最后一次完成的工作（2026-08-24 第三轮：F-Droid 提交包 + 手机推送）
 - **fdroiddata 提交包就绪**：docs/fdroid/SUBMIT_GUIDE.md（Web IDE 方法 A / git am 方法 B）+ fdroiddata-mr-0001.patch（45 行，git am 即用）+ metadata 内容 + MR 描述草稿
 - **分类修正（重要）**：实测官方 fdroiddata config/categories.yml —— **没有 "Money" 分类**（web_search 信息过时）；正确 = **Market & Price**（价格/汇率/股票）；Builds 补 **subdir: app**（否则 buildserver 构建失败）
