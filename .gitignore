@@ -7,3 +7,4 @@ captures/
 .DS_Store
 .kotlin/
 graphify-out/
+keystore.properties

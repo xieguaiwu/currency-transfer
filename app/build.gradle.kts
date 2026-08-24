@@ -1,9 +1,19 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
     id("app.cash.paparazzi") version "1.3.5"
+}
+
+// Optional local signing config for side-loading builds (kept OUT of git).
+// F-Droid rebuilds with its own signature; this only signs GitHub artifacts.
+val ksFile = rootProject.file("keystore.properties")
+val ksProps = Properties()
+if (ksFile.exists()) {
+    ksFile.inputStream().use { ksProps.load(it) }
 }
 
 android {
@@ -16,9 +26,22 @@ android {
         versionCode = 1
         versionName = "1.0.0"
     }
+    signingConfigs {
+        if (ksFile.exists()) {
+            create("release") {
+                storeFile = file(ksProps["storeFile"] as String)
+                storePassword = ksProps["storePassword"] as String
+                keyAlias = ksProps["keyAlias"] as String
+                keyPassword = ksProps["keyPassword"] as String
+            }
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
+            if (ksFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     compileOptions {
