@@ -3,6 +3,7 @@
 ## 项目当前状态
 FX Pixel（currency-transfer）— Android 应用（Kotlin/Compose），全球货币实时汇率 + 年份间通胀计算，复古像素风。
 v1.0.0 已完成 UI 精修 + 漏洞测试 + F-Droid 发布准备（tag v1.0.0）。
+**远程仓库已创建并推送**：https://github.com/xieguaiwu/currency-transfer（PUBLIC，master，含 tag v1.0.0）
 
 ## 最后一次完成的工作（2026-08-24 第二轮）
 - **多模态界面调查**：Paparazzi（JVM 渲染真实 UI，无设备可用）生成截图，视觉审查
@@ -24,17 +25,20 @@ v1.0.0 已完成 UI 精修 + 漏洞测试 + F-Droid 发布准备（tag v1.0.0）
 - 数据源重构：ExchangeRateSource/CpiSource 接口化（fake 可注入，Paparazzi 测试用）
 
 ## 遗留问题 / 待办
-- [ ] **fdroiddata MR**：需用户 GitLab 账号；SourceCode/IssueTracker/Changelog 目前是 GitHub 占位符，需真实仓库 URL
-- [ ] 截图由 Paparazzi 生成（真实 UI 代码），建议真机侧载替换以更贴近实际（skill §3.2 建议）
-- [ ] 真机冒烟（adb 无设备）；可复现构建是在本机验证，F-Droid buildserver 可能因 vcsInfo 需在 tag 处干净构建
-- [ ] 可选：汇率/CPI 本地缓存、深色主题已有（像素风即深色）、汇率历史图
-- [ ] Verified 徽章路线（自有签名）未采用——当前走 F-Droid 官方签名，签名决策窗口在首次发布前
+- [ ] **fdroiddata MR**：需用户 GitLab 账号 fork fdroiddata 提 MR（远程仓库 URL 已真实化：xieguaiwu/currency-transfer）
+- [ ] 截图由 Paparazzi 生成（真实 UI 代码），建议真机侧载替换以更贴近实际（skill §3.2 建议）；已随 README 展示 docs/screenshots/
+- [ ] 真机冒烟（adb 无设备）；可复现构建在本机验证，F-Droid buildserver 需在 tag 处干净构建（已满足：tag v1.0.0 干净树）
+- [ ] 可选：GitHub Release 发布 APK（Verified 徽章路线需自有签名，首次发布前决策）
+- [ ] 可选：汇率/CPI 本地缓存、汇率历史图
 
 ## 远程资源
 无（数据来自公开免费 API）
 
 ## 知识图谱
 - graphify-out/: 不存在（小项目）
+
+## 远程资源
+- GitHub 远程：https://github.com/xieguaiwu/currency-transfer（PUBLIC，默认 master；gh CLI 已认证 xieguaiwu）
 
 ## 关键架构
 ```
