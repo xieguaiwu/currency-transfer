@@ -2,8 +2,10 @@ package com.xieguiawu.currencytransfer.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,14 +42,23 @@ fun CurrencyPicker(
     var dialogOpen by rememberSaveable { mutableStateOf(false) }
     var query by rememberSaveable { mutableStateOf("") }
 
-    OutlinedTextField(
-        value = Currencies.displayName(selected),
-        onValueChange = {},
-        readOnly = true,
-        label = { Text("Currency") },
-        trailingIcon = { Icon(Icons.Filled.ArrowDropDown, contentDescription = "Select currency") },
-        modifier = modifier.clickable { dialogOpen = true },
-    )
+    Box(modifier = modifier) {
+        OutlinedTextField(
+            value = Currencies.displayName(selected),
+            onValueChange = {},
+            readOnly = true,
+            label = { Text("Currency") },
+            trailingIcon = { Icon(Icons.Filled.ArrowDropDown, contentDescription = "Select currency") },
+            modifier = Modifier.fillMaxWidth(),
+        )
+        // A read-only TextField consumes taps for focus/caret, so the outer
+        // clickable would never fire. Capture taps with a transparent overlay.
+        Box(
+            Modifier
+                .matchParentSize()
+                .clickable { dialogOpen = true },
+        )
+    }
 
     if (dialogOpen) {
         val candidates = Currencies.all.filter { allowedCodes == null || it.code in allowedCodes }
