@@ -47,6 +47,18 @@ Requirements: JDK 17+, Android SDK 35.
 # APK: app/build/outputs/apk/debug/app-debug.apk
 ```
 
+### Install on a phone
+
+Enable USB debugging on the phone, then:
+
+```bash
+# Option A: one-shot script (pushes to /sdcard/Download/)
+./scripts/push-apk-to-phone.sh
+
+# Option B: adb install directly
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
 F-Droid release is in preparation (see F-Droid section below).
 
 ## Test

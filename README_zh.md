@@ -46,6 +46,18 @@
 # APK 路径: app/build/outputs/apk/debug/app-debug.apk
 ```
 
+### 安装到手机
+
+手机开启 USB 调试后：
+
+```bash
+# 方式 A：一键脚本（推送到 /sdcard/Download/）
+./scripts/push-apk-to-phone.sh
+
+# 方式 B：adb 直接安装
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
 F-Droid 发布准备中（见下方 F-Droid 章节）。
 
 ## 测试
