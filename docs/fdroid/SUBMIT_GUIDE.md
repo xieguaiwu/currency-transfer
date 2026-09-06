@@ -38,11 +38,19 @@ git push mine add-currency-transfer
 
 ## metadata 内容
 
+> 与 `com.xieguiawu.currencytransfer.yml` 逐字一致（改一处必改两处）。
+> 校验：`bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml`
+
 ```yaml
+# F-Droid metadata for com.xieguiawu.currencytransfer (FX Pixel)
+# 提交位置：gitlab.com/fdroid/fdroiddata → metadata/com.xieguiawu.currencytransfer.yml
+# 校验：bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml
+# 注意：Builds 只列已打 tag 的版本；HEAD 上未发版的改动不得出现在这里。
 Categories:
   - Market & Price
 License: MIT
 AuthorName: xieguaiwu
+AuthorEmail: xieguaiwu@users.noreply.github.com
 SourceCode: https://github.com/xieguaiwu/currency-transfer
 IssueTracker: https://github.com/xieguaiwu/currency-transfer/issues
 Changelog: https://github.com/xieguaiwu/currency-transfer/releases
@@ -56,12 +64,19 @@ Builds:
     subdir: app
     gradle:
       - yes
+
+  - versionName: 1.0.1
+    versionCode: 2
+    commit: v1.0.1
+    subdir: app
+    gradle:
+      - yes
 AntiFeatures:
   - NonFreeNet
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.0.0
-CurrentVersionCode: 1
+CurrentVersion: 1.0.1
+CurrentVersionCode: 2
 ```
 
 ## MR 描述
@@ -80,7 +95,8 @@ calculation (World Bank CPI).
 - Category Market & Price (validated against config/categories.yml)
 
 ## Build
-`gradle: yes`, `subdir: app`, commit v1.0.0 (clean tree, wrapper committed)
+`gradle: yes`, `subdir: app`, commit v1.0.1 (clean tree, wrapper committed)
+Two Builds entries (v1.0.0 + v1.0.1) so the initial import carries history.
 ```
 
 ## 评审关注点（reviewer 可能问）
@@ -89,5 +105,14 @@ calculation (World Bank CPI).
 - **数据来源**：full_description 已说明两个 API
 - **可复现性**：tag v1.0.0 双构建 SHA-256 一致（`7b872bf5...`）
 - **许可证**：MIT（LICENSE 在仓库根）
+- **subdir: app**：标准多模块 Gradle 工程（root 有 settings.gradle.kts + wrapper），
+  fdroiddata 同类工程（Markor / AppManager / DejaVu）均用 `subdir: app`，非笔误
+
+## 提交前自检清单
+
+- [ ] `git ls-remote --tags origin` 含 yml 里每一个 `commit:` 值（v1.0.0 / v1.0.1）
+- [ ] `fastlane/metadata/android/en-US/changelogs/` 有与 versionCode 同名的文件（1.txt / 2.txt）
+- [ ] `bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml` 通过
+- [ ] 截图为真机或至少与实物一致（当前为 Paparazzi 真实渲染，461x1000）
 
 MR 合并后 24-48 小时出现在 F-Droid 主仓库（签名步骤人工介入）。

@@ -8,7 +8,7 @@ FILE="${1:-docs/fdroid/com.xieguiawu.currencytransfer.yml}"
 echo "== Validating $FILE =="
 
 python3 - "$FILE" <<'EOF'
-import sys, re
+import sys, re, pathlib
 path = sys.argv[1]
 text = open(path).read()
 
@@ -76,15 +76,51 @@ if data.get('UpdateCheckMode') != 'Tags':
     sys.exit(1)
 
 builds_text = text.split('Builds:')[1].split('AntiFeatures:')[0] if 'Builds:' in text else ''
-if not re.search(r'commit:\s*v1\.0\.0', builds_text) or 'versionCode: 1' not in builds_text:
-    print("FAIL: Builds block must reference commit v1.0.0 and versionCode 1")
-    sys.exit(1)
 if 'subdir: app' not in builds_text:
-    print("FAIL: Builds must include subdir: app (module is in app/ subdirectory)")
+    print("WARN: no 'subdir: app' — fine only if the Gradle project root IS the repo root")
+
+# Every commit: reference must be a real, pushed tag, and versionName/versionCode
+# must agree with fastlane changelogs/<versionCode>.txt.
+import subprocess
+refs = re.findall(r'commit:\s*([A-Za-z0-9._^{}~/-]+)', builds_text)
+codes = re.findall(r'versionCode:\s*(\d+)', builds_text)
+names = re.findall(r'versionName:\s*([\d.]+)', builds_text)
+if not refs:
+    print("FAIL: Builds block has no commit: references")
     sys.exit(1)
+try:
+    tags = set(subprocess.run(['git', 'tag'], capture_output=True, text=True,
+                              check=True).stdout.split())
+except Exception as e:
+    tags = set()
+    print(f"WARN: cannot list git tags ({e}) — skipping tag existence check")
+missing = [r for r in refs if r not in tags]
+if missing:
+    print(f"FAIL: commit: references are not local tags: {missing}")
+    print("  fix: git tag <name> <sha> && git push origin --tags")
+    sys.exit(1)
+print(f"OK: all {len(refs)} commit: references exist as tags {refs}")
+
+for code in codes:
+    for loc in ('en-US', 'zh-CN'):
+        p = pathlib.Path(f'fastlane/metadata/android/{loc}/changelogs/{code}.txt')
+        if not p.exists():
+            print(f"FAIL: missing changelog {p} (versionCode {code})")
+            sys.exit(1)
+print(f"OK: changelogs present for versionCodes {codes} (en-US + zh-CN)")
+
+cur = data.get('CurrentVersion', '')
+if names and cur != names[-1]:
+    print(f"FAIL: CurrentVersion '{cur}' != last Builds versionName '{names[-1]}'")
+    sys.exit(1)
+if codes and str(data.get('CurrentVersionCode')) != codes[-1]:
+    print(f"FAIL: CurrentVersionCode '{data.get('CurrentVersionCode')}' != last Builds versionCode '{codes[-1]}'")
+    sys.exit(1)
+print(f"OK: CurrentVersion {cur}/{data.get('CurrentVersionCode')} matches newest Build entry")
 
 if 'NonFreeNet' not in text:
-    print("WARN: AntiFeatures NonFreeNet not declared")
+    print("NOTE: NonFreeNet not declared (correct for pure-LAN/offline apps; "
+          "required if the app depends on a proprietary network service)")
 
-print(f"OK: {len(required)} required fields, categories={cats}, repo={data.get('Repo')}, subdir=app")
+print(f"OK: {len(required)} required fields, categories={cats}, repo={data.get('Repo')}")
 EOF

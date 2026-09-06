@@ -1,26 +1,36 @@
-From 2a421f44e9f0ba60a168bb707dc708009c9853dc Mon Sep 17 00:00:00 2001
+From 9b449677809b3a99fc4c84c1cac1f11a2bdd0d9b Mon Sep 17 00:00:00 2001
 From: xieguaiwu <xieguaiwu@users.noreply.github.com>
-Date: Mon, 24 Aug 2026 15:21:19 +0800
+Date: Sun, 6 Sep 2026 12:32:51 +0800
 Subject: [PATCH] Add FX Pixel (com.xieguiawu.currencytransfer)
 
-Retro-pixel Android app for currency exchange rates and inflation calculation.
-MIT, keyless public APIs, AntiFeatures: NonFreeNet.
+Retro-pixel Android app for currency exchange rates (open.er-api.com)
+and inflation calculation (World Bank CPI).
+
+- MIT licensed, keyless public data sources (AntiFeatures: NonFreeNet)
+- Single INTERNET permission, HTTPS only, zero tracking
+- Reproducible build verified (dual-build SHA-256 match at tag v1.0.0)
+- Fastlane metadata (en-US / zh-CN) in-repo
+- Category Market & Price (validated against config/categories.yml)
 ---
- metadata/com.xieguiawu.currencytransfer.yml | 24 +++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ metadata/com.xieguiawu.currencytransfer.yml | 35 +++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
  create mode 100644 metadata/com.xieguiawu.currencytransfer.yml
 
 diff --git a/metadata/com.xieguiawu.currencytransfer.yml b/metadata/com.xieguiawu.currencytransfer.yml
 new file mode 100644
-index 000000000..b7e378776
+index 0000000..297730c
 --- /dev/null
 +++ b/metadata/com.xieguiawu.currencytransfer.yml
-@@ -0,0 +1,24 @@
-+# F-Droid metadata draft for com.xieguiawu.currencytransfer
+@@ -0,0 +1,35 @@
++# F-Droid metadata for com.xieguiawu.currencytransfer (FX Pixel)
++# 提交位置：gitlab.com/fdroid/fdroiddata → metadata/com.xieguiawu.currencytransfer.yml
++# 校验：bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml
++# 注意：Builds 只列已打 tag 的版本；HEAD 上未发版的改动不得出现在这里。
 +Categories:
 +  - Market & Price
 +License: MIT
 +AuthorName: xieguaiwu
++AuthorEmail: xieguaiwu@users.noreply.github.com
 +SourceCode: https://github.com/xieguaiwu/currency-transfer
 +IssueTracker: https://github.com/xieguaiwu/currency-transfer/issues
 +Changelog: https://github.com/xieguaiwu/currency-transfer/releases
@@ -34,12 +44,19 @@ index 000000000..b7e378776
 +    subdir: app
 +    gradle:
 +      - yes
++
++  - versionName: 1.0.1
++    versionCode: 2
++    commit: v1.0.1
++    subdir: app
++    gradle:
++      - yes
 +AntiFeatures:
 +  - NonFreeNet
 +AutoUpdateMode: Version
 +UpdateCheckMode: Tags
-+CurrentVersion: 1.0.0
-+CurrentVersionCode: 1
++CurrentVersion: 1.0.1
++CurrentVersionCode: 2
 -- 
 2.54.0
 
