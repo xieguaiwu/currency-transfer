@@ -46,6 +46,9 @@ git push mine add-currency-transfer
 # 提交位置：gitlab.com/fdroid/fdroiddata → metadata/com.xieguiawu.currencytransfer.yml
 # 校验：bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml
 # 注意：Builds 只列已打 tag 的版本；HEAD 上未发版的改动不得出现在这里。
+# 可复现性（2026-09-06 于 tag 实测，unsigned 比对；签名 APK 逐构建不同）：
+#   v1.0.0 -> 55d73c405b78a94b70f193523ccab38a6e11371f33a11082afb015238dbf97ad
+#   v1.0.1 -> 6875b026f90bb267d123c210bbd6016434e01fffd856607194e2c9b744c6798c
 Categories:
   - Market & Price
 License: MIT
@@ -90,7 +93,7 @@ calculation (World Bank CPI).
 ## Details
 - MIT licensed, keyless public data sources (NonFreeNet declared)
 - Single INTERNET permission, HTTPS only, zero tracking
-- Reproducible build verified (dual-build SHA-256 match at tag v1.0.0)
+- Reproducible build verified at tag v1.0.0 (unsigned comparison; see below)
 - Fastlane metadata (en-US / zh-CN), real Paparazzi-rendered screenshots
 - Category Market & Price (validated against config/categories.yml)
 
@@ -103,7 +106,12 @@ Two Builds entries (v1.0.0 + v1.0.1) so the initial import carries history.
 
 - **NonFreeNet**：应用依赖 open.er-api.com 和 World Bank API（公开免费）——已声明
 - **数据来源**：full_description 已说明两个 API
-- **可复现性**：tag v1.0.0 双构建 SHA-256 一致（`7b872bf5...`）
+- **可复现性**（2026-09-06 在 tag 上重测，unsigned 比对）：
+  - tag `v1.0.0` → `55d73c405b78a94b70f193523ccab38a6e11371f33a11082afb015238dbf97ad`
+  - tag `v1.0.1` → `6875b026f90bb267d123c210bbd6016434e01fffd856607194e2c9b744c6798c`
+  - 旧记录里的 `7b872bf5...` **无法复现**，已弃用；比对必须去签名——
+    AGP 8.x 用 RSA-PSS 签名，随机 salt 使签名 APK 逐构建不同（实测同 commit
+    两次签名构建 `5f61f0fb...` vs `537ec282...`）
 - **许可证**：MIT（LICENSE 在仓库根）
 - **subdir: app**：标准多模块 Gradle 工程（root 有 settings.gradle.kts + wrapper），
   fdroiddata 同类工程（Markor / AppManager / DejaVu）均用 `subdir: app`，非笔误

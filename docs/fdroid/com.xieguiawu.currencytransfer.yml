@@ -2,6 +2,9 @@
 # 提交位置：gitlab.com/fdroid/fdroiddata → metadata/com.xieguiawu.currencytransfer.yml
 # 校验：bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml
 # 注意：Builds 只列已打 tag 的版本；HEAD 上未发版的改动不得出现在这里。
+# 可复现性（2026-09-06 于 tag 实测，unsigned 比对；签名 APK 逐构建不同）：
+#   v1.0.0 -> 55d73c405b78a94b70f193523ccab38a6e11371f33a11082afb015238dbf97ad
+#   v1.0.1 -> 6875b026f90bb267d123c210bbd6016434e01fffd856607194e2c9b744c6798c
 Categories:
   - Market & Price
 License: MIT
