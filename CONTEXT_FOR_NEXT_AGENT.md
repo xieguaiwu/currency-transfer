@@ -24,6 +24,21 @@ v1.0.1 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远�
 - **手机推送脚本**：scripts/push-apk-to-phone.sh（adb push 到 /sdcard/Download/FX-Pixel-debug.apk）
 - **USB 诊断结论**：华为 NOH-AN00 物理连接存在（12d1:107e），当前模式 hisuite_mtp_mass_storage_hdb（无 ADB 接口）→ adb 不可见；系统缺 gvfsd-mtp/libmtp（装包需 sudo）→ MTP 挂载不可行；**待用户手机开启 USB 调试**后运行脚本
 
+## 2026-09-06 F-Droid 复核轮次
+- yml 补 **v1.0.1（versionCode 2）** Build 块并同步 CurrentVersion——此前只声明 1.0.0，
+  一上线就落后实际发布版
+- MR 补丁重生成并在干净树 `git am` 验证通过；SUBMIT_GUIDE 内嵌 metadata 与 yml **逐字一致**（脚本校验）
+- `validate-fdroid-metadata.sh` 升级为通用版：校验 commit: 是真 tag、每个 versionCode 有
+  en+zh changelog、CurrentVersion 与最新 Builds 项一致
+- 🔴 **可复现性结论修正**：旧记录 `7b872bf5` 无法复现，且 `verify-reproducible.sh` 现在会
+  **假失败**——AGP 8.x 用 RSA-PSS 签名，随机 salt 落在 APK Signing Block，签名 APK 逐构建不同
+  （实测同 commit 两次 `5f61f0fb...` vs `537ec282...`）。旧结论之所以成立，是因为那次验证
+  跑在 `keystore.properties` 创建**前 5 分钟**，无意中比的是 unsigned 产物。
+  脚本已改为临时藏起 keystore + 只比 `*-unsigned.apk`（与 F-Droid apksigcopier 同法）。
+  在 tag 的干净 worktree 上重测：v1.0.0 → `55d73c40...dbf97ad`，v1.0.1 → `6875b026...4c6798c`，双构建一致 ✅
+- ⚠️ **推论**：作者其余安卓 app 凡称「签名构建双哈希一致」的都需按同法重验
+  （picture-trans 已重验并改；android-rebirth / api-checkers 本来就比 unsigned）
+
 ## 遗留问题 / 待办
 - [ ] **手机 USB 调试**：用户手机开启 USB 调试 + 允许授权后，运行 `scripts/push-apk-to-phone.sh` 推送 APK（诊断：华为 NOH-AN00 当前无 ADB 接口）
 - [ ] **fdroiddata MR**：需用户 GitLab 账号（无 glab/token/Chrome 会话）；提交包已就绪 docs/fdroid/SUBMIT_GUIDE.md，fork 后 2 分钟可提 MR
@@ -56,4 +71,4 @@ MainActivity → MainScreen(Tab+header) → ExchangeScreen / InflationScreen
 - 发布产物：fastlane/metadata/（en-US/zh-CN）、scripts/verify-reproducible.sh、scripts/validate-fdroid-metadata.sh、scripts/push-apk-to-phone.sh、docs/fdroid/
 
 ## 最后更新时间
-2026-08-24 15:30
+2026-09-06 13:55
