@@ -103,7 +103,13 @@ See [SECURITY.md](SECURITY.md) for the security policy.
 
 - `fastlane/metadata/`: bilingual store metadata (en-US, zh-CN)
 - `scripts/verify-reproducible.sh`: reproducible build check (verified at tag v1.0.0)
-- `docs/fdroid/com.xieguiawu.currencytransfer.yml`: fdroiddata metadata draft (AntiFeatures: NonFreeNet)
+- `docs/fdroid/com.xieguiawu.currencytransfer.yml`: fdroiddata metadata (AntiFeatures: NonFreeNet)
+- `docs/fdroid/fdroiddata-mr-0001.patch`: ready-to-`git am` MR commit
+- `docs/fdroid/SUBMIT_GUIDE.md`: how to file it
+
+**Status: not submitted.** The MR step needs a GitLab account; no MR exists in
+`gitlab.com/fdroid/fdroiddata` for this app yet. This repo is the closest of
+the author's apps to being filed.
 
 ## Contributing
 
