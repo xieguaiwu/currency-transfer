@@ -43,11 +43,12 @@ v1.0.1 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远�
 
 - fastlane en-US + zh-CN phoneScreenshots（各 2 张）+ README docs/screenshots 全部换真机实截
   （1152x2250）；Paparazzi 渲染保留作视觉回归（脚本仍在）
-- GitLab 账号已注册 → SUBMIT_GUIDE 方法 A 可提 MR
+- GitLab 账号已注册 → **fdroiddata 已提交**：MR !48683（2026-09-12）；fork CI 因新账号
+  身份验证零 job，本地 `fdroid lint`（2.4.5）exit 0；等待审核（排期常 1-4 周）
 
 ## 遗留问题 / 待办
 - [ ] **手机 USB 调试**：用户手机开启 USB 调试 + 允许授权后，运行 `scripts/push-apk-to-phone.sh` 推送 APK（诊断：华为 NOH-AN00 当前无 ADB 接口）
-- [ ] **fdroiddata MR**：GitLab 账号已注册（2026-09-12）；按 SUBMIT_GUIDE 方法 A 提 MR（约 2 分钟）
+- [x] **fdroiddata MR 已提交**：!48683（2026-09-12），等审核；响应 reviewer 需登录 GitLab 网页
 - [x] 截图已换真机实截（2026-09-12；fastlane en-US+zh-CN + README docs/screenshots）
 - [ ] 可选：Verified 徽章路线（需自有签名 keystore，首次发布前决策；当前 F-Droid 官方签名）
 - [ ] 可选：汇率本地缓存、汇率历史图

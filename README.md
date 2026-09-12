@@ -110,9 +110,9 @@ See [SECURITY.md](SECURITY.md) for the security policy.
 - `docs/fdroid/fdroiddata-mr-0001.patch`: ready-to-`git am` MR commit
 - `docs/fdroid/SUBMIT_GUIDE.md`: how to file it
 
-**Status: not submitted.** The MR step needs a GitLab account; no MR exists in
-`gitlab.com/fdroid/fdroiddata` for this app yet. This repo is the closest of
-the author's apps to being filed.
+**Status: submitted (2026-09-12)** — [fdroiddata MR !48683](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/48683),
+in review. (The fork's CI shows "failed" with zero jobs — a fresh-account
+identity-verification gate, not a metadata problem; `fdroid lint` passes locally.)
 
 ## Contributing
 

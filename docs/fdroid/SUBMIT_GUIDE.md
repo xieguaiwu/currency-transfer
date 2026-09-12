@@ -2,6 +2,8 @@
 
 本目录包含提交流程所需的一切。你只需要一个有 GitLab 的账号，约 2 分钟完成。
 
+> ✅ **已提交**：[MR !48683](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/48683)（2026-09-12），等待审核（排期常 1-4 周）。以下内容保留作记录；fork CI 因新账号身份验证不可用（零 job），本地 `fdroid lint`（2.4.5）exit 0。
+
 ## 已就绪的文件
 
 | 文件 | 用途 |
@@ -93,8 +95,8 @@ calculation (World Bank CPI).
 ## Details
 - MIT licensed, keyless public data sources (NonFreeNet declared)
 - Single INTERNET permission, HTTPS only, zero tracking
-- Reproducible build verified at tag v1.0.0 (unsigned comparison; see below)
-- Fastlane metadata (en-US / zh-CN), real Paparazzi-rendered screenshots
+- Reproducible build verified at tags v1.0.0 and v1.0.1 (unsigned comparison)
+- Fastlane metadata (en-US / zh-CN); screenshots are real-device captures (2026-09-12)
 - Category Market & Price (validated against config/categories.yml)
 
 ## Build

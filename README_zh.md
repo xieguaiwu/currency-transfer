@@ -68,7 +68,7 @@
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-F-Droid 发布准备中（见下方 F-Droid 章节）。
+已提交 fdroiddata（2026-09-12）：[MR !48683](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/48683)，等待审核（排期常 1-4 周）。
 
 ## 测试
 
