@@ -121,6 +121,6 @@ Two Builds entries (v1.0.0 + v1.0.1) so the initial import carries history.
 - [ ] `git ls-remote --tags origin` 含 yml 里每一个 `commit:` 值（v1.0.0 / v1.0.1）
 - [ ] `fastlane/metadata/android/en-US/changelogs/` 有与 versionCode 同名的文件（1.txt / 2.txt）
 - [ ] `bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml` 通过
-- [ ] 截图为真机或至少与实物一致（当前为 Paparazzi 真实渲染，461x1000）
+- [x] 截图已换真机实截（2026-09-12，1152x2250；fastlane en-US + zh-CN + README docs/screenshots 同步）
 
 MR 合并后 24-48 小时出现在 F-Droid 主仓库（签名步骤人工介入）。

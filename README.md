@@ -12,6 +12,8 @@ A privacy-friendly Android app for global currency conversion and inflation calc
 
 ## Screenshots
 
+Real-device captures (2026-09-12):
+
 | Exchange | Inflation |
 |---|---|
 | ![Exchange](docs/screenshots/exchange.png) | ![Inflation](docs/screenshots/inflation.png) |
@@ -80,9 +82,10 @@ F-Droid release is in preparation (see F-Droid section below).
 # Android Lint: 0 errors, 0 warnings
 ```
 
-## Screenshots (Paparazzi)
+## Screenshot regression renders (Paparazzi)
 
-UI renders are produced by Paparazzi (JVM, no device needed):
+Store screenshots above are real-device captures; Paparazzi UI renders
+(JVM, no device needed) remain available for visual regression:
 
 ```bash
 ./gradlew testDebugUnitTest --tests "com.xieguiawu.currencytransfer.AppScreenshotsTest"

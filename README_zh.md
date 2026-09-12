@@ -12,6 +12,8 @@
 
 ## 界面截图
 
+真机实截（2026-09-12）：
+
 | 汇率换算 | 通胀计算 |
 |---|---|
 | ![Exchange](docs/screenshots/exchange.png) | ![Inflation](docs/screenshots/inflation.png) |
@@ -77,9 +79,9 @@ F-Droid 发布准备中（见下方 F-Droid 章节）。
 # Android Lint：0 错误，0 警告
 ```
 
-## 截图（Paparazzi）
+## 截图回归渲染（Paparazzi）
 
-UI 渲染由 Paparazzi 生成（JVM，无需真机）：
+上方商店截图为真机实截；Paparazzi 渲染（JVM，无需真机）仍可用于视觉回归：
 
 ```bash
 ./gradlew testDebugUnitTest --tests "com.xieguiawu.currencytransfer.AppScreenshotsTest"
