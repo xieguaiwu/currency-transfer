@@ -1,5 +1,8 @@
 # CONTEXT_FOR_NEXT_AGENT.md
 
+
+> 🔗 跨仓 F-Droid 申请总览（五 app MR 状态 / GitLab 基础设施 / 提交流程 / 教训索引）：`../FDROID_PORTFOLIO.md`——状态变更时与本文双向同步。
+
 ## 项目当前状态
 FX Pixel（currency-transfer）— Android 应用（Kotlin/Compose），全球货币实时汇率 + 年份间通胀计算，复古像素风。
 v1.0.1 已完成：UI 精修 + 漏洞测试 + F-Droid 发布准备 + GitHub 远程/CI/Release。
