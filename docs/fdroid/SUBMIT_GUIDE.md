@@ -3,6 +3,8 @@
 本目录包含提交流程所需的一切。你只需要一个有 GitLab 的账号，约 2 分钟完成。
 
 > ✅ **已提交**：[MR !48683](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/48683)（2026-09-12），等待审核（排期常 1-4 周）。以下内容保留作记录；fork CI 因新账号身份验证不可用（零 job），本地 `fdroid lint`（2.4.5）exit 0。
+>
+> 🔄 **审核第一轮已响应**（2026-09-15，reviewer linsui）：MR 描述已换成官方 App Inclusion 模板+勾选框（标题 `New app: FX Pixel`）、`commit` 钉全 hash、单 Build、NonFreeNet 补理由、元数据 rewritemeta 规范形；本地已复刻 CI 全套（rewritemeta/lint/checkupdates/tools/**fdroid build 端到端**/scanner）全绿，待维护者重触发上游 CI。本文件的原始提交说明保留作记录；`fdroiddata-mr-0001.patch` 已按当前分支重生成（基于最新上游 master，仍可直接 `git am`）。
 
 ## 已就绪的文件
 

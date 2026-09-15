@@ -1,36 +1,24 @@
-From 78698735eaedd68ca2bf808aa9eb722d6d14f51e Mon Sep 17 00:00:00 2001
+From 1ed2202db0dcb26ab3c4a86b9947c08d4fb71d9e Mon Sep 17 00:00:00 2001
 From: xieguaiwu <xieguaiwu@users.noreply.github.com>
-Date: Sun, 6 Sep 2026 13:58:22 +0800
+Date: Tue, 15 Sep 2026 22:34:43 +0800
 Subject: [PATCH] Add FX Pixel (com.xieguiawu.currencytransfer)
 
-Retro-pixel Android app for currency exchange rates (open.er-api.com)
-and inflation calculation (World Bank CPI).
-
-- MIT licensed, keyless public data sources (AntiFeatures: NonFreeNet)
-- Single INTERNET permission, HTTPS only, zero tracking
-- Reproducible build verified at both tags (unsigned comparison):
-  v1.0.0 -> 55d73c405b78a94b70f193523ccab38a6e11371f33a11082afb015238dbf97ad
-  v1.0.1 -> 6875b026f90bb267d123c210bbd6016434e01fffd856607194e2c9b744c6798c
-- Fastlane metadata (en-US / zh-CN) in-repo
-- Category Market & Price (validated against config/categories.yml)
+MIT licensed; fastlane metadata (en-US / zh-CN); reproducible build verified at the tagged commit.
 ---
- metadata/com.xieguiawu.currencytransfer.yml | 38 +++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ metadata/com.xieguiawu.currencytransfer.yml | 30 +++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
  create mode 100644 metadata/com.xieguiawu.currencytransfer.yml
 
 diff --git a/metadata/com.xieguiawu.currencytransfer.yml b/metadata/com.xieguiawu.currencytransfer.yml
 new file mode 100644
-index 0000000..89a903f
+index 0000000000..390aee60c0
 --- /dev/null
 +++ b/metadata/com.xieguiawu.currencytransfer.yml
-@@ -0,0 +1,38 @@
-+# F-Droid metadata for com.xieguiawu.currencytransfer (FX Pixel)
-+# 提交位置：gitlab.com/fdroid/fdroiddata → metadata/com.xieguiawu.currencytransfer.yml
-+# 校验：bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.currencytransfer.yml
-+# 注意：Builds 只列已打 tag 的版本；HEAD 上未发版的改动不得出现在这里。
-+# 可复现性（2026-09-06 于 tag 实测，unsigned 比对；签名 APK 逐构建不同）：
-+#   v1.0.0 -> 55d73c405b78a94b70f193523ccab38a6e11371f33a11082afb015238dbf97ad
-+#   v1.0.1 -> 6875b026f90bb267d123c210bbd6016434e01fffd856607194e2c9b744c6798c
+@@ -0,0 +1,30 @@
++AntiFeatures:
++  NonFreeNet:
++    en-US: Uses the proprietary open.er-api.com and World Bank API services for 
++      exchange rates and inflation data.
 +Categories:
 +  - Market & Price
 +License: MIT
@@ -39,29 +27,24 @@ index 0000000..89a903f
 +SourceCode: https://github.com/xieguaiwu/currency-transfer
 +IssueTracker: https://github.com/xieguaiwu/currency-transfer/issues
 +Changelog: https://github.com/xieguaiwu/currency-transfer/releases
++
 +AutoName: FX Pixel
++
 +RepoType: git
 +Repo: https://github.com/xieguaiwu/currency-transfer
++
 +Builds:
-+  - versionName: 1.0.0
-+    versionCode: 1
-+    commit: v1.0.0
++  - versionName: 1.0.2
++    versionCode: 3
++    commit: 3d0bd8789e3a75acd72953c41b1179f49fa5fb95
 +    subdir: app
 +    gradle:
 +      - yes
 +
-+  - versionName: 1.0.1
-+    versionCode: 2
-+    commit: v1.0.1
-+    subdir: app
-+    gradle:
-+      - yes
-+AntiFeatures:
-+  - NonFreeNet
 +AutoUpdateMode: Version
 +UpdateCheckMode: Tags
-+CurrentVersion: 1.0.1
-+CurrentVersionCode: 2
++CurrentVersion: 1.0.2
++CurrentVersionCode: 3
 -- 
 2.54.0
 
