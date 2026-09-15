@@ -80,5 +80,13 @@ MainActivity → MainScreen(Tab+header) → ExchangeScreen / InflationScreen
 - 截图测试：AppScreenshotsTest.kt（Paparazzi 1.3.5，fake sources）
 - 发布产物：fastlane/metadata/（en-US/zh-CN）、scripts/verify-reproducible.sh、scripts/validate-fdroid-metadata.sh、scripts/push-apk-to-phone.sh、docs/fdroid/
 
+## 2026-09-15 F-Droid 审核第一轮响应（reviewer: linsui）
+
+- **reviewer 四项共性要求已全部落实**：①MR 描述换 App Inclusion 模板+勾选框，标题改 `New app: FX Pixel (com.xieguiawu.currencytransfer)` ②`commit` 钉全 hash `3d0bd8789e3a75acd72953c41b1179f49fa5fb95`（tag v1.0.2）③删旧版本 Build（只留 v1.0.2/vc3）④NonFreeNet 补理由。
+- **应用侧改动（v1.0.2，versionCode 3）**：`app_name` 由 "Currency Transfer" 改为 "FX Pixel"——checkupdates CI 强制 AutoName=源码真名，不改则 MR 必红；品牌（README/fastlane/release 资产名）本来就是 FX Pixel。
+- **本地 CI 复刻（fdroidserver git master，与 CI 同源）**：rewritemeta 无 diff / lint 零警告 / checkupdates --auto 无 diff / scanner 无发现 / tools 六脚本全过。
+- **fork CI 红叉 = GitLab 身份验证门禁（零 job）**，已在 MR 评论请求 reviewer 从上游重触发；教训：提交前只跑 `fdroid lint` 不够，必须复刻 rewritemeta/checkupdates/scanner/tools 四件套。
+- 元数据副本 docs/fdroid/*.yml 已同步规范形；validate 脚本已支持全 hash commit（不再只认 tag）。
+
 ## 最后更新时间
-2026-09-12（真机截图批）
+2026-09-15（审核第一轮：四项要求落实 + v1.0.2 发版（FX Pixel 改名）+ 元数据规范形）

@@ -79,7 +79,7 @@ builds_text = text.split('Builds:')[1].split('AntiFeatures:')[0] if 'Builds:' in
 if 'subdir: app' not in builds_text:
     print("WARN: no 'subdir: app' — fine only if the Gradle project root IS the repo root")
 
-# Every commit: reference must be a real, pushed tag, and versionName/versionCode
+# Every commit: reference must be a pushed tag or (F-Droid reviewer rule, 2026-09) a full 40-hex commit hash; versionName/versionCode
 # must agree with fastlane changelogs/<versionCode>.txt.
 import subprocess
 refs = re.findall(r'commit:\s*([A-Za-z0-9._^{}~/-]+)', builds_text)
@@ -94,12 +94,18 @@ try:
 except Exception as e:
     tags = set()
     print(f"WARN: cannot list git tags ({e}) — skipping tag existence check")
-missing = [r for r in refs if r not in tags]
+def _commit_hash_ok(r):
+    if re.fullmatch(r'[0-9a-f]{40}', r):
+        return subprocess.run(['git', 'cat-file', '-e', r + '^{commit}'],
+                              capture_output=True).returncode == 0
+    return False
+
+missing = [r for r in refs if r not in tags and not _commit_hash_ok(r)]
 if missing:
-    print(f"FAIL: commit: references are not local tags: {missing}")
+    print(f"FAIL: commit: references are neither local tags nor resolvable commit hashes: {missing}")
     print("  fix: git tag <name> <sha> && git push origin --tags")
     sys.exit(1)
-print(f"OK: all {len(refs)} commit: references exist as tags {refs}")
+print(f"OK: all {len(refs)} commit: references resolve (tags or full commit hashes) {refs}")
 
 for code in codes:
     for loc in ('en-US', 'zh-CN'):
