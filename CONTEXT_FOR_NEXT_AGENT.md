@@ -94,6 +94,7 @@ MainActivity → MainScreen(Tab+header) → ExchangeScreen / InflationScreen
 - **元数据重 canonical 化**：`NonFreeNet` 理由折行同步修正。关键教训：CI 用 Debian `python3-ruamel.yaml` 0.18.10，本地 PyPI 0.19.1 折行宽度不同导致假绿——钉版本后与 CI 期望逐字一致。
 - RB 复测：v1.0.2 于 tag 双构建一致 `80353964339ee0d13a6c658fc0251b306d3002d1ba4bf345c284491f671b1be7`（2026-09-25 复跑）。
 - 已推 fork 分支并回复 reviewer，待其重触发上游 CI。
+- 上游 CI 已重触发且 **45/45 jobs 全绿**（2026-09-25，fdroid/fdroiddata）；已回复绿报 + 勾选描述 pipeline 项。等 reviewer 终审/合并。
 
 ## 最后更新时间
-2026-09-25（审核第二轮：换可达邮箱 + 规范形重跑 + v1.0.2 RB 复测）
+2026-09-25（审核第二轮：换可达邮箱 + 规范形重跑 + v1.0.2 RB 复测；上游 CI 45/45 全绿）

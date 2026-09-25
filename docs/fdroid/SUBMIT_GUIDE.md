@@ -7,6 +7,8 @@
 > 🔄 **审核第一轮已响应**（2026-09-15，reviewer linsui）：MR 描述已换成官方 App Inclusion 模板+勾选框（标题 `New app: FX Pixel`）、`commit` 钉全 hash、单 Build、NonFreeNet 补理由、元数据 rewritemeta 规范形；本地已复刻 CI 全套（rewritemeta/lint/checkupdates/tools/**fdroid build 端到端**/scanner）全绿，待维护者重触发上游 CI。本文件的原始提交说明保留作记录；`fdroiddata-mr-0001.patch` 已按当前分支重生成（基于最新上游 master，仍可直接 `git am`）。
 >
 > 🔄 **审核第二轮已响应**（2026-09-25）：联系邮箱换可达地址 `xieguaiwu@163.com`（reviewer 行内点名）；元数据在与 CI 一致依赖集（ruamel.yaml 0.18.10 + fdroidserver master a35fddd）下重新 canonical 化——`NonFreeNet` 理由折行同步修正。已推 fork 分支（add-currency-transfer）并逐条回复 reviewer，待其重触发上游 CI。
+>
+> ✅ **上游 CI 全绿**（2026-09-25）：45/45 jobs 全部通过（含 `fdroid build` / `fdroid rewritemeta` / `check apk`）；已逐 MR 回复绿报并勾选描述清单。等待终审/合并。
 
 ## 已就绪的文件
 
