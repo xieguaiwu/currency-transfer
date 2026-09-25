@@ -88,5 +88,12 @@ MainActivity → MainScreen(Tab+header) → ExchangeScreen / InflationScreen
 - **fork CI 红叉 = GitLab 身份验证门禁（零 job）**，已在 MR 评论请求 reviewer 从上游重触发；教训：提交前只跑 `fdroid lint` 不够，必须复刻 rewritemeta/checkupdates/scanner/tools 四件套。
 - 元数据副本 docs/fdroid/*.yml 已同步规范形；validate 脚本已支持全 hash commit（不再只认 tag）。
 
+## 2026-09-25 F-Droid 审核第二轮响应（reviewer: linsui）
+
+- **reviewer 二轮意见（行内）**：`AuthorEmail` 是 noreply 地址、无法联系 → 已换 `xieguaiwu@163.com`。
+- **元数据重 canonical 化**：`NonFreeNet` 理由折行同步修正。关键教训：CI 用 Debian `python3-ruamel.yaml` 0.18.10，本地 PyPI 0.19.1 折行宽度不同导致假绿——钉版本后与 CI 期望逐字一致。
+- RB 复测：v1.0.2 于 tag 双构建一致 `80353964339ee0d13a6c658fc0251b306d3002d1ba4bf345c284491f671b1be7`（2026-09-25 复跑）。
+- 已推 fork 分支并回复 reviewer，待其重触发上游 CI。
+
 ## 最后更新时间
-2026-09-15（审核第一轮：四项要求落实 + v1.0.2 发版（FX Pixel 改名）+ 元数据规范形）
+2026-09-25（审核第二轮：换可达邮箱 + 规范形重跑 + v1.0.2 RB 复测）

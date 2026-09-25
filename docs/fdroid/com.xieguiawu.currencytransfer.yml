@@ -1,12 +1,12 @@
 AntiFeatures:
   NonFreeNet:
-    en-US: Uses the proprietary open.er-api.com and World Bank API services for 
-      exchange rates and inflation data.
+    en-US: Uses the proprietary open.er-api.com and World Bank API services for exchange
+      rates and inflation data.
 Categories:
   - Market & Price
 License: MIT
 AuthorName: xieguaiwu
-AuthorEmail: xieguaiwu@users.noreply.github.com
+AuthorEmail: xieguaiwu@163.com
 SourceCode: https://github.com/xieguaiwu/currency-transfer
 IssueTracker: https://github.com/xieguaiwu/currency-transfer/issues
 Changelog: https://github.com/xieguaiwu/currency-transfer/releases

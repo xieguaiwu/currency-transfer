@@ -1,6 +1,6 @@
-From 1ed2202db0dcb26ab3c4a86b9947c08d4fb71d9e Mon Sep 17 00:00:00 2001
+From 0048e53016a854b0d347e06f1b7b58f80d7c3b4e Mon Sep 17 00:00:00 2001
 From: xieguaiwu <xieguaiwu@users.noreply.github.com>
-Date: Tue, 15 Sep 2026 22:34:43 +0800
+Date: Fri, 25 Sep 2026 13:19:38 +0800
 Subject: [PATCH] Add FX Pixel (com.xieguiawu.currencytransfer)
 
 MIT licensed; fastlane metadata (en-US / zh-CN); reproducible build verified at the tagged commit.
@@ -11,19 +11,19 @@ MIT licensed; fastlane metadata (en-US / zh-CN); reproducible build verified at 
 
 diff --git a/metadata/com.xieguiawu.currencytransfer.yml b/metadata/com.xieguiawu.currencytransfer.yml
 new file mode 100644
-index 0000000000..390aee60c0
+index 000000000..b18c5fb8b
 --- /dev/null
 +++ b/metadata/com.xieguiawu.currencytransfer.yml
 @@ -0,0 +1,30 @@
 +AntiFeatures:
 +  NonFreeNet:
-+    en-US: Uses the proprietary open.er-api.com and World Bank API services for 
-+      exchange rates and inflation data.
++    en-US: Uses the proprietary open.er-api.com and World Bank API services for exchange
++      rates and inflation data.
 +Categories:
 +  - Market & Price
 +License: MIT
 +AuthorName: xieguaiwu
-+AuthorEmail: xieguaiwu@users.noreply.github.com
++AuthorEmail: xieguaiwu@163.com
 +SourceCode: https://github.com/xieguaiwu/currency-transfer
 +IssueTracker: https://github.com/xieguaiwu/currency-transfer/issues
 +Changelog: https://github.com/xieguaiwu/currency-transfer/releases
