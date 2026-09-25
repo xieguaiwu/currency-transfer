@@ -16,7 +16,12 @@ fi
 # (apksigcopier), so we do the same by hiding the keystore for the duration.
 KS=keystore.properties
 KS_TMP=.keystore.properties.repro-hidden
-restore_ks() { [ -f "$KS_TMP" ] && mv "$KS_TMP" "$KS"; }
+restore_ks() {
+  # Note: plain `[ -f ... ] && mv ...` would leave the function (and thus a
+  # `set -e` script exiting through this trap) with status 1 whenever there
+  # is nothing to restore — turning a successful run into exit code 1.
+  if [ -f "$KS_TMP" ]; then mv "$KS_TMP" "$KS"; fi
+}
 trap restore_ks EXIT
 if [ -f "$KS" ]; then mv "$KS" "$KS_TMP"; echo "hid $KS (comparing unsigned APKs)"; fi
 
